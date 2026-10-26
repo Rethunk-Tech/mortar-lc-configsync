@@ -12,7 +12,7 @@
     <ThunderstoreName>ConfigSync</ThunderstoreName>
     <ThunderstoreDescription>Shares the settings a mod marks as shared from the host to every player while they are connected.</ThunderstoreDescription>
     <ThunderstoreCommunities>lethal-company</ThunderstoreCommunities>
-    <ThunderstoreCategories>mods;bepinex</ThunderstoreCategories>
+    <ThunderstoreCategories>libraries;bepinex</ThunderstoreCategories>
   </PropertyGroup>
 
   <ItemGroup>
