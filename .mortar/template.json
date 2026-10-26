@@ -1,0 +1,14 @@
+{
+  "template": "Rethunk-Tech/mortar-bepinex5-template",
+  "ref": "main",
+  "name": "ConfigSync",
+  "values": {
+    "description": "Shares the settings a mod marks as shared from the host to every player while they are connected.",
+    "modAuthor": "Rethunk Tech",
+    "team": "Mortar",
+    "idPrefix": "tech.rethunk.mortar",
+    "repositoryUrl": "https://github.com/Rethunk-Tech/mortar-lc-configsync",
+    "audience": "everyone",
+    "categories": "mods|bepinex"
+  }
+}
