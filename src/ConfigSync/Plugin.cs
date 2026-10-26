@@ -7,6 +7,7 @@ namespace ConfigSync;
 
 [BepInPlugin(MyPluginInfo.Id, MyPluginInfo.Name, MyPluginInfo.Version)]
 [BepInProcess("Lethal Company.exe")]
+[BepInDependency("ainavt.lc.lethalconfig", BepInDependency.DependencyFlags.SoftDependency)]
 public class Plugin : BaseUnityPlugin
 {
     internal static ManualLogSource Log { get; private set; } = null!;
@@ -31,6 +32,7 @@ public class Plugin : BaseUnityPlugin
         {
             Network.Attach(NetworkManager.Singleton);
         }
+        LethalConfigNotes.Attach();
         Log.LogInfo($"{MyPluginInfo.Name} {MyPluginInfo.Version} loaded");
     }
 }

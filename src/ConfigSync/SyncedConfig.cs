@@ -79,6 +79,15 @@ public sealed class SyncedConfig
 
     internal static string Key(ConfigDefinition definition) => definition.Section + "\n" + definition.Key;
 
+    // Raised when a shared setting starts using the host's value, stops, or the host's value changes, so a config menu
+    // can show what's in use.
+    internal static event Action<ISyncedEntry>? StateChanged;
+
+    internal static void RaiseStateChanged(ISyncedEntry entry) => StateChanged?.Invoke(entry);
+
+    internal static ISyncedEntry? Find(ConfigEntryBase entry) =>
+        all.Values.SelectMany(c => c.Entries.Values).FirstOrDefault(e => e.LocalEntry == entry);
+
     internal static void ClearAll() => ForEachEntry(e => e.Clear());
 
     internal static void RefreshAll() => ForEachEntry(e => e.Refresh());
@@ -126,6 +135,11 @@ public sealed class SyncedConfig
 internal interface ISyncedEntry
 {
     Sync Level { get; }
+    ConfigEntryBase LocalEntry { get; }
+    // Why the player's own value isn't being used right now, or null if it is.
+    string? HostNote { get; }
+    // The host's value while it's the one in use, so a config menu can show it instead of the player's own.
+    object? HostValue { get; }
     string LocalText { get; }
     void Apply(string text);
     void Clear();
@@ -158,6 +172,14 @@ public sealed class SyncedEntry<T> : ISyncedEntry
 
     /// <summary>Raised when Value changes, from either side.</summary>
     public event Action? Changed;
+
+    ConfigEntryBase ISyncedEntry.LocalEntry => Local;
+
+    object? ISyncedEntry.HostValue => FromHost ? hostValue : null;
+
+    string? ISyncedEntry.HostNote => !FromHost ? null : Level == Sync.HostEnforced
+        ? $"The host sets this to {hostText} while you're connected."
+        : $"You follow the host's recommendation of {hostText} while you're connected. Turn off \"Follow host recommendations\" in ConfigSync to use your own value.";
 
     // Send strings raw. BepInEx's converter doesn't escape backslashes.
     string ISyncedEntry.LocalText => Local.Value is string text
@@ -197,10 +219,16 @@ public sealed class SyncedEntry<T> : ISyncedEntry
 
     private void Update(T before)
     {
+        bool wasFromHost = FromHost;
         FromHost = hostText != null && (Level == Sync.HostEnforced || Plugin.FollowRecommendations);
         if (!EqualityComparer<T>.Default.Equals(before, Value))
         {
             RaiseChanged();
+        }
+        // While the player's own value is in use, a config menu may hold edits they haven't saved yet.
+        if (wasFromHost || FromHost)
+        {
+            SyncedConfig.RaiseStateChanged(this);
         }
     }
 
