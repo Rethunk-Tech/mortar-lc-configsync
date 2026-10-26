@@ -44,6 +44,10 @@ public sealed class SyncedConfig
 
     internal static IEnumerable<SyncedConfig> All => all.Values;
 
+    // The player's "Follow host recommendations" setting. It lives here, not on the plugin, so the tests can run the
+    // sharing logic without Unity.
+    internal static bool FollowRecommendations { get; set; } = true;
+
     /// <summary>The shared settings of the plugin, created on first use.</summary>
     public static SyncedConfig For(BaseUnityPlugin plugin)
     {
@@ -124,7 +128,7 @@ public sealed class SyncedConfig
         }
         catch (IOException e)
         {
-            Plugin.Log.LogWarning($"{Id}: could not write {sidecarPath}: {e.Message}");
+            Log.Source?.LogWarning($"{Id}: couldn't write {sidecarPath}: {e.Message}");
         }
     }
 
@@ -220,7 +224,7 @@ public sealed class SyncedEntry<T> : ISyncedEntry
     private void Update(T before)
     {
         bool wasFromHost = FromHost;
-        FromHost = hostText != null && (Level == Sync.HostEnforced || Plugin.FollowRecommendations);
+        FromHost = hostText != null && (Level == Sync.HostEnforced || SyncedConfig.FollowRecommendations);
         if (!EqualityComparer<T>.Default.Equals(before, Value))
         {
             RaiseChanged();
@@ -240,7 +244,7 @@ public sealed class SyncedEntry<T> : ISyncedEntry
         }
         catch (Exception e)
         {
-            Plugin.Log.LogError($"{Local.Definition}: a Changed handler threw: {e}");
+            Log.Source?.LogError($"{Local.Definition}: a Changed handler threw: {e}");
         }
     }
 }

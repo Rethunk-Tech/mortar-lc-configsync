@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ModFile Include="$(TargetPath)" Destination="plugins/" />
+    <InternalsVisibleTo Include="ConfigSync.Tests" />
   </ItemGroup>
 
   <ItemGroup>

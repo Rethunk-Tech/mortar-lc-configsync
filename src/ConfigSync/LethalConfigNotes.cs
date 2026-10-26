@@ -54,7 +54,7 @@ internal static class LethalConfigNotes
             }
             catch (Exception e)
             {
-                Plugin.Log.LogWarning($"Could not mark shared settings in LethalConfig: {e.Message}");
+                Log.Source?.LogWarning($"Couldn't mark shared settings in LethalConfig: {e.Message}");
             }
         }));
     }
@@ -116,7 +116,7 @@ internal static class LethalConfigNotes
         }
         catch (Exception e)
         {
-            Plugin.Log.LogWarning($"Could not update LethalConfig with the host's value: {e.Message}");
+            Log.Source?.LogWarning($"Couldn't update LethalConfig with the host's value: {e.Message}");
         }
     }
 
@@ -145,7 +145,7 @@ internal static class LethalConfigNotes
             }
             catch (Exception e)
             {
-                Plugin.Log.LogWarning($"Could not update a LethalConfig tooltip: {e.Message}");
+                Log.Source?.LogWarning($"Couldn't update a LethalConfig tooltip: {e.Message}");
             }
         }));
     }

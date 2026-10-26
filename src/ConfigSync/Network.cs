@@ -183,7 +183,7 @@ internal static class Network
     {
         if (warned.Add(key))
         {
-            Plugin.Log.LogWarning(message);
+            Log.Source?.LogWarning(message);
         }
     }
 }
