@@ -12,6 +12,15 @@ mods you don't have are ignored. If the host has a different version of a mod, t
 With LethalConfig installed, settings using the host's value are greyed out and show the host's value instead of yours
 while you're connected, with the reason in the tooltip. They change as soon as the host changes them.
 
+![The host sets Number and Greeting in LethalConfig and applies, and the client's values change right away](https://raw.githubusercontent.com/Rethunk-Tech/mortar-lc-configsync/main/docs/lethalconfig-host-change.gif)
+
+## In Mortar
+
+[Mortar](https://github.com/Rethunk-Tech/mortar)'s Config editor marks each shared setting Host enforced or Host
+recommended. Settings without a mark aren't shared.
+
+![Mortar's Config editor: Distance is Host enforced, Show marker is Host recommended, Marker colour isn't shared](https://raw.githubusercontent.com/Rethunk-Tech/mortar-lc-configsync/main/docs/mortar-config-editor.png)
+
 ## For mod authors
 
 Add `Mortar-ConfigSync` as a dependency, then share the settings players should agree on:
