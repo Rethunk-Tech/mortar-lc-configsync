@@ -174,7 +174,13 @@ internal static class Network
             }
             try
             {
+                string? before = entry.HostText;
                 entry.Apply(text);
+                // The first values are in the join line; after that, say when the host changes one that's in use.
+                if (before != null && before != text && entry.HostNote != null)
+                {
+                    Notice.Add($"The host set {config.Name}: {key.Substring(key.IndexOf('\n') + 1)} to {text}.");
+                }
             }
             catch (Exception)
             {

@@ -146,6 +146,8 @@ internal interface ISyncedEntry
     string? HostNote { get; }
     // The host's value while it's the one in use, so a config menu can show it instead of the player's own.
     object? HostValue { get; }
+    // The text the host last sent, whether or not it's in use.
+    string? HostText { get; }
     string LocalText { get; }
     void Apply(string text);
     void Clear();
@@ -182,6 +184,8 @@ public sealed class SyncedEntry<T> : ISyncedEntry
     ConfigEntryBase ISyncedEntry.LocalEntry => Local;
 
     object? ISyncedEntry.HostValue => FromHost ? hostValue : null;
+
+    string? ISyncedEntry.HostText => hostText;
 
     string? ISyncedEntry.HostNote => !FromHost ? null : Level == Sync.HostEnforced
         ? $"The host sets this to {hostText} while you're connected."
