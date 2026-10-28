@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace ConfigSync;
 
-// Chat lines for a player who joined: which settings the host sets, and any mod whose version differs from the host's.
-// They wait until the HUD is up, since the host's values arrive while the game is still loading.
+// Tells a player who joined, in chat, how many settings the host sets and which mods' versions differ from the host's.
+// It waits for the HUD, since the host's values arrive while the game is still loading.
 internal sealed class Notice : MonoBehaviour
 {
     private static readonly List<string> pending = new();
