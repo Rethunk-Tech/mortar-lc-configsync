@@ -27,6 +27,7 @@ public sealed class SyncedConfig
     private static readonly Dictionary<string, SyncedConfig> all = new();
 
     internal readonly string Id;
+    internal readonly string Name;
     internal readonly string Version;
     internal readonly Dictionary<string, ISyncedEntry> Entries = new();
     private readonly string sidecarPath;
@@ -35,9 +36,10 @@ public sealed class SyncedConfig
     // changes lots of settings sends one message.
     internal bool Dirty;
 
-    private SyncedConfig(string id, string version, string configFilePath)
+    private SyncedConfig(string id, string name, string version, string configFilePath)
     {
         Id = id;
+        Name = name;
         Version = version;
         sidecarPath = Path.ChangeExtension(configFilePath, ".sync.json");
     }
@@ -54,7 +56,7 @@ public sealed class SyncedConfig
         BepInPlugin info = plugin.Info.Metadata;
         if (!all.TryGetValue(info.GUID, out SyncedConfig config))
         {
-            config = new SyncedConfig(info.GUID, info.Version.ToString(), plugin.Config.ConfigFilePath);
+            config = new SyncedConfig(info.GUID, info.Name, info.Version.ToString(), plugin.Config.ConfigFilePath);
             all[info.GUID] = config;
             Network.Created(config);
         }

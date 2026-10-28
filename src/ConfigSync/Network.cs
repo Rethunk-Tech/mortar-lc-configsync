@@ -27,7 +27,11 @@ internal static class Network
         manager = networkManager;
         networkManager.OnServerStarted += ServerStarted;
         networkManager.OnClientStarted += ClientStarted;
-        networkManager.OnClientStopped += _ => SyncedConfig.ClearAll();
+        networkManager.OnClientStopped += _ =>
+        {
+            SyncedConfig.ClearAll();
+            Notice.Reset();
+        };
     }
 
     // The scene manager and tick system are recreated every session.
@@ -155,9 +159,9 @@ internal static class Network
             return;
         }
         reader.ReadValueSafe(out string version);
-        if (version != config.Version)
+        if (version != config.Version && WarnOnce(config.Id + "/" + version, $"{config.Id}: the host has version {version} and you have {config.Version}"))
         {
-            WarnOnce(config.Id + "/" + version, $"{config.Id}: the host has version {version} and you have {config.Version}");
+            Notice.Add($"{config.Name}: the host has version {version} and you have {config.Version}.");
         }
         reader.ReadValueSafe(out int count);
         for (int i = 0; i < count; i++)
@@ -179,11 +183,13 @@ internal static class Network
         }
     }
 
-    private static void WarnOnce(string key, string message)
+    private static bool WarnOnce(string key, string message)
     {
-        if (warned.Add(key))
+        if (!warned.Add(key))
         {
-            Log.Source?.LogWarning(message);
+            return false;
         }
+        Log.Source?.LogWarning(message);
+        return true;
     }
 }

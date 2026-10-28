@@ -1,6 +1,7 @@
 using BepInEx;
 using BepInEx.Configuration;
 using Unity.Netcode;
+using UnityEngine;
 
 namespace ConfigSync;
 
@@ -31,6 +32,11 @@ public class Plugin : BaseUnityPlugin
             Network.Attach(NetworkManager.Singleton);
         }
         LethalConfigNotes.Attach();
+        // BepInEx's own object can go when a scene loads, so the notices run on one that stays.
+        var holder = new GameObject("ConfigSync notices");
+        DontDestroyOnLoad(holder);
+        holder.hideFlags = HideFlags.HideAndDontSave;
+        holder.AddComponent<Notice>();
         Logger.LogInfo($"{MyPluginInfo.Name} {MyPluginInfo.Version} loaded");
     }
 }

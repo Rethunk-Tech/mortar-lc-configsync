@@ -7,7 +7,8 @@ Lets mods share settings from the host with everyone in the lobby.
   recommends. Settings a host enforces apply either way.
 
 The host's values only apply while you're connected, and they're never written to your config file. Settings for
-mods you don't have are ignored. If the host has a different version of a mod, the log says so.
+mods you don't have are ignored. When you join, chat says how many of your settings the host sets, and names any mod
+whose version differs from the host's.
 
 With LethalConfig installed, settings using the host's value are greyed out and show the host's value instead of yours
 while you're connected, with the reason in the tooltip. They change as soon as the host changes them.
