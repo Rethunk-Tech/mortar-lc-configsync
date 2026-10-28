@@ -32,7 +32,7 @@ internal sealed class Notice : MonoBehaviour
         if (!joinShown)
         {
             joinShown = true;
-            List<SyncedConfig> mods = SyncedConfig.All.Where(c => c.Entries.Values.Any(e => e.HostNote != null)).ToList();
+            var mods = SyncedConfig.All.Where(c => c.Entries.Values.Any(e => e.HostNote != null)).ToList();
             int count = mods.Sum(c => c.Entries.Values.Count(e => e.HostNote != null));
             if (count > 0)
             {
