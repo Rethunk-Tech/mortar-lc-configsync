@@ -3,12 +3,14 @@
   "ref": "main",
   "name": "ConfigSync",
   "values": {
-    "description": "Shares the settings a mod marks as shared from the host to every player while they are connected.",
-    "modAuthor": "Rethunk Tech",
-    "team": "Mortar",
-    "idPrefix": "tech.rethunk.mortar",
-    "repositoryUrl": "https://github.com/Rethunk-Tech/mortar-lc-configsync",
     "audience": "everyone",
-    "categories": "mods|bepinex"
-  }
+    "categories": "mods|bepinex",
+    "description": "Shares the settings a mod marks as shared from the host to every player while they are connected.",
+    "idPrefix": "tech.rethunk.mortar",
+    "modAuthor": "Rethunk Tech",
+    "repositoryUrl": "https://github.com/Rethunk-Tech/mortar-lc-configsync",
+    "team": "Mortar"
+  },
+  "game": "lethal-company",
+  "templateIcon": "e24326af3db8cbd550135b19a8d7b724dd8e186d1b98642084467742d2700506"
 }
