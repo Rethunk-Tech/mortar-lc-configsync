@@ -1,5 +1,6 @@
 # CodeQL advanced setup: every language in this repository with the security-and-quality suite, re-runnable
-# from the Actions tab. Go is built (autobuild); every other language is extracted without a build.
+# from the Actions tab. C# is built so the analysis resolves its NuGet and game references; Actions is
+# extracted without a build.
 name: CodeQL
 
 on:
@@ -29,7 +30,7 @@ jobs:
           - language: actions
             build-mode: none
           - language: csharp
-            build-mode: none
+            build-mode: manual
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -41,6 +42,19 @@ jobs:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
           queries: security-and-quality
+      - name: Set up .NET
+        if: matrix.build-mode == 'manual'
+        uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+        with:
+          dotnet-version: "10.x"
+          cache: true
+          cache-dependency-path: "**/packages.lock.json"
+      - name: Restore
+        if: matrix.build-mode == 'manual'
+        run: dotnet restore --locked-mode
+      - name: Build
+        if: matrix.build-mode == 'manual'
+        run: dotnet build -c Release --no-restore
       - name: Analyze
         uses: github/codeql-action/analyze@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
         with:
