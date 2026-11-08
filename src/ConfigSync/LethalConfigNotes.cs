@@ -108,7 +108,7 @@ internal static class LethalConfigNotes
         {
             foreach ((object item, ISyncedEntry shared) in SharedItems(managerType))
             {
-                if (shared == changed)
+                if (ReferenceEquals(shared, changed))
                 {
                     currentValueProperty!.SetValue(item, originalValueProperty!.GetValue(item));
                 }
