@@ -10,7 +10,7 @@ public sealed class SyncedEntryTests : IDisposable
     private readonly DirectoryInfo dir = Directory.CreateTempSubdirectory("configsync-test-");
     private readonly ConfigFile file;
 
-    public SyncedEntryTests() => file = new ConfigFile(Path.Combine(dir.FullName, "test.cfg"), false);
+    public SyncedEntryTests() => file = new ConfigFile(Path.Join(dir.FullName, "test.cfg"), false);
 
     public void Dispose()
     {
