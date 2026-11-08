@@ -198,7 +198,7 @@ public sealed class SyncedEntry<T> : ISyncedEntry
 
     void ISyncedEntry.Apply(string text)
     {
-        T value = typeof(T) == typeof(string) ? (T)(object)text : (T)TomlTypeConverter.ConvertToValue(text, typeof(T));
+        T value = text is T sameType ? sameType : (T)TomlTypeConverter.ConvertToValue(text, typeof(T));
         // The host might run a different version of the mod with a wider range, so clamp to ours.
         if (Local.Description.AcceptableValues is { } acceptable)
         {
