@@ -29,6 +29,14 @@ internal sealed class Notice : MonoBehaviour
         {
             return;
         }
+        foreach (string line in Drain())
+        {
+            hud.AddChatMessage(line, "");
+        }
+    }
+
+    private static List<string> Drain()
+    {
         if (!joinShown)
         {
             joinShown = true;
@@ -39,10 +47,8 @@ internal sealed class Notice : MonoBehaviour
                 pending.Insert(0, $"The host sets {count} of your settings ({string.Join(", ", mods.Select(c => c.Name))}).");
             }
         }
-        foreach (string line in pending)
-        {
-            hud.AddChatMessage(line, "");
-        }
+        var lines = pending.ToList();
         pending.Clear();
+        return lines;
     }
 }
