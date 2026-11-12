@@ -44,6 +44,10 @@ jobs:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
           queries: security-and-quality
+          # The C# build writes generated sources under artifacts/; they aren't ours.
+          config: |
+            paths-ignore:
+              - artifacts/**
       - name: Set up .NET
         if: matrix.build-mode == 'manual'
         uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
