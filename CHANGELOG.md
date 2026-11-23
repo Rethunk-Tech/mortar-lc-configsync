@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+
+- The join chat message about the host's settings shows once, even when several chat lines arrive together.
+- When a setting changes in LethalConfig, the shared setting it resets is matched by identity, so another equal setting isn't reset.
+- Dependabot's NuGet update checks no longer fail trying to reach Thunderstore.
+
 ## 0.1.1
 
 - When you join, chat says how many of your settings the host sets and names any mod whose version differs from the
